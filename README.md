@@ -19,14 +19,14 @@ Deep PeNSieve relies on other two libraires: [TensorFlow](https://www.tensorflow
 
 At least TensorFlow must be installed to run Deep PeNSieve. If need to use fused operations, install SoftPosit too. You can install them, for example, using `pip`. First install the prerequisites:
 
-```
+```shell
 $ pip install numpy-posit
 $ pip install requests
 ```
 
 And then, the required libraries:
 
-```
+```shell
 $ pip install https://s3-ap-southeast-1.amazonaws.com/posit-speedgo/tensorflow_posit-1.11.0.0.0.1.dev1-cp36-cp36m-linux_x86_64.whl
 $ pip install softposit
 ```
@@ -50,31 +50,36 @@ $ python
 >>> b = tf.constant(0.7, dtype=tf.posit8)
 >>> with tf.Session() as sess:
 ...     print(f'Using Posit8, {a.eval()} + {b.eval()} = {tf.add(a,b).eval()}')
-... 
+...
 Using Posit8, 0.296875 + 0.703125 = 1.0
 ```
 
 ## Source files
+
 The actual source files of the project are stored inside the `src` folder. it contains three folders:  
+
 * `TensorFlow`. Contains scripts for generating and training CN models.
 * `SoftPosit`. Contains scripts for generating same models as in `TensorFlow` folder, and perform low-precision inference with 8-bit posits using quire and fused operations.
 * `TF_Lite`. Contains scripts for creating TensorFlow Lite models from trained models on single-precision floating-point at `TensorFlow` folder.
 
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
 ## Authors and credits
+
 Deep PeNSieve is managed by Raul Murillo (contact: ramuri01@ucm.es).
 <!-- * **Raul Murillo** - *Initial work* - [Deep PeNSieve](https://github.com/RaulMurillo/deep_pensieve) -->
 
 Deep PeNSieve uses NumPy, and relies heavily on [TensorFlow](https://www.tensorflow.org/) and [SoftPosit](https://gitlab.com/cerlane/SoftPosit-Python).
 
-|How to cite Deep PeNSieve|
+| How to cite Deep PeNSieve                                                                           |
 |-----------------------------------------------------------------------------------------------------|
-|If you want to refer to the framework, or the project as a whole, please cite publication below:   |
-|[Reference document required]|
+| If you want to refer to the framework, or the project as a whole, please cite publication below:    |
+| [Reference document required]                                                                       |
 
 ## License
+
 [Apache License 2.0](LICENSE)
