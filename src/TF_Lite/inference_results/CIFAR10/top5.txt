@@ -1,0 +1,4 @@
+float32: 0.9615
+FP16 Quantization: 0.7189
+INT8 Quantization: 0.9614
+FP16 Quantization: 0.9615

@@ -1,0 +1,9 @@
+posit32: 0.9998
+posit16: 1.0
+posit8: 0.9999
+posit8_quire: 0.9999
+float32: 1.0
+float16: 0.9999
+float16_quant:
+Int Quantization:
+

@@ -27,7 +27,8 @@ else:
     data_set = 'mnist'
     d_set = mnist
 
-saved_model_dir = './train_results/lenet5/' + data_set + '/' 
+saved_model_dir = './data/lenet5/' + data_set + '/'
+results_dir = './inference_results/lenet5/' + data_set + '/'  
 
 # confirm Dataset
 print("Dataset is: ", data_set)
@@ -128,10 +129,10 @@ for i in range(eval_data.shape[0]):
 print('Post-training integer quantization accuracy: ' + str(acc / len(eval_data)))
 print('Post-training integer quantization Top-5: ' + str(t5 / len(eval_data)))
 
-f = open(saved_model_dir + 'top5.txt', "a+")
+f = open(results_dir + 'top5.txt', "a+")
 f.write("INT8 Quantization: %s\n" % (t5 / len(eval_data)))
 f.close()
 
-f = open(saved_model_dir + 'INT8_quant.txt', "a+")
+f = open(results_dir + 'INT8_quant.txt', "a+")
 f.write("Top-1: %s\nTop-5: %s\n" % (acc / len(eval_data), t5 / len(eval_data)))
 f.close()
