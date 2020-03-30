@@ -23,12 +23,13 @@ tf.set_random_seed(2)
 # Load SVHN Dataset
 data_set = 'SVHN'
 
-#Dataset location
+# Dataset location
 data_loc = '/home/raul/Documentos/Posits/deep-pensieve/src/TensorFlow/data/SVHN/dataset/'
 train_location = data_loc + 'train_32x32.mat'
 test_location = data_loc + 'test_32x32.mat'
 
 print(f"Dataset is: {data_set}")
+
 
 def load_train_data():
     train_dict = sio.loadmat(train_location)
@@ -36,7 +37,7 @@ def load_train_data():
 
     X_train = []
     for i in range(X.shape[3]):
-        X_train.append(X[:,:,:,i])
+        X_train.append(X[:, :, :, i])
     X_train = np.asarray(X_train)
 
     Y_train = train_dict['y']
@@ -45,7 +46,8 @@ def load_train_data():
     #         Y_train[i] = 0
     # Y_train = to_categorical(Y_train,10)
     Y_train %= 10
-    return (X_train,Y_train)
+    return (X_train, Y_train)
+
 
 def load_test_data():
     test_dict = sio.loadmat(test_location)
@@ -53,7 +55,7 @@ def load_test_data():
 
     X_test = []
     for i in range(X.shape[3]):
-        X_test.append(X[:,:,:,i])
+        X_test.append(X[:, :, :, i])
     X_test = np.asarray(X_test)
 
     Y_test = test_dict['y']
@@ -61,30 +63,30 @@ def load_test_data():
     #     if Y_test[i]%10 == 0:
     #         Y_test[i] = 0
     # Y_test = to_categorical(Y_test,10)
-    return (X_test,Y_test)
+    Y_test %= 10
+    return (X_test, Y_test)
+
 
 X_train, y_train = load_train_data()
 X_test, y_test = load_test_data()
 
-
 # somehow y_train comes as a 2D nx1 matrix
-#y_train = y_train.reshape(y_train.shape[0])
-#y_test = y_test.reshape(y_test.shape[0])
+y_train = y_train.reshape(y_train.shape[0])
+y_test = y_test.reshape(y_test.shape[0])
 
 assert(len(X_train) == len(y_train))
 assert(len(X_test) == len(y_test))
 
-# X_train = X_train#[:500]
-# y_train = y_train#[:500]
-# X_test = X_test#[:50]
-# y_test = y_test#[:50]
+# X_train = X_train[:500]
+# y_train = y_train[:500]
+# X_test = X_test[:50]
+# y_test = y_test[:50]
 
 print("\nImage Shape: {}\n".format(X_train[0].shape))
 print("Training Set:   {} samples".format(len(X_train)))
 print("Test Set:       {} samples".format(len(X_test)))
 
-exit(1)
-
+# exit(1)
 
 """## Setup TensorFlow
 The `EPOCH` and `BATCH_SIZE` values affect the training speed and model accuracy.
@@ -143,6 +145,7 @@ print("Input data type: {}".format(type(X_train[0, 0, 0, 0])))
 # https://github.com/tensorflow/tensorflow/blob/24f578cd66bfc3ec35017fc77e136e43c4b74742/tensorflow/python/kernel_tests/lrn_op_test.py
 # https://www.kaggle.com/sarvesh278/cnn-and-batch-normalization-in-tensorflow
 # https://gist.github.com/tomokishii/0ce3bdac1588b5cca9fa5fbdf6e1c412
+
 
 def batch_norm(x, n_out, phase_train):
     """
@@ -291,7 +294,7 @@ y = tf.placeholder(tf.int32, (None), name='labels')
 training = tf.placeholder(tf.bool)
 
 """## Training Pipeline
-Create a training pipeline that uses the model to classify CIFAR10 data.
+Create a training pipeline that uses the model to classify dataset.
 """
 
 rate = posit(0.001)
