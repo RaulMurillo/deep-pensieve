@@ -24,7 +24,8 @@ tf.set_random_seed(2)
 data_set = 'SVHN'
 
 # Dataset location
-data_loc = '/home/raul/Documentos/Posits/deep-pensieve/src/TensorFlow/data/SVHN/dataset/'
+# data_loc = '/home/raul/Documentos/Posits/deep-pensieve/src/TensorFlow/data/SVHN/dataset/'
+data_loc = './data/' + data_set + '/dataset/'
 train_location = data_loc + 'train_32x32.mat'
 test_location = data_loc + 'test_32x32.mat'
 
