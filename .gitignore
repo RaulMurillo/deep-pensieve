@@ -3,8 +3,14 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Visual Studio Code
+.vscode/
+
 # C extensions
 *.so
+
+# Datasets
+*.mat
 
 # Distribution / packaging
 .Python
