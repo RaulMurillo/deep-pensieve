@@ -10,8 +10,8 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 from sklearn.utils import shuffle
-from tensorflow.keras.datasets import cifar10
 from tensorflow.contrib.layers import flatten
+import scipy.io as sio
 import sys
 import csv
 import os
@@ -20,10 +20,34 @@ import time
 np.random.seed(1)
 tf.set_random_seed(2)
 
-# Load CIFAR10 Dataset
-data_set = 'CIFAR-10'
+# Load Dataset
+data_set = 'SVHN'
 print("Dataset is: ", data_set)
-(_, _), (X_test, y_test) = cifar10.load_data()
+
+data_path = './data/' + data_set + '/'
+test_location = 'dataset/' + data_path + 'test_32x32.mat'
+
+
+def load_test_data():
+    test_dict = sio.loadmat(test_location)
+    X = np.asarray(test_dict['X'])
+
+    X_test = []
+    for i in range(X.shape[3]):
+        X_test.append(X[:, :, :, i])
+    X_test = np.asarray(X_test)
+
+    Y_test = test_dict['y']
+    # for i in range(len(Y_test)):
+    #     if Y_test[i]%10 == 0:
+    #         Y_test[i] = 0
+    # Y_test = to_categorical(Y_test,10)
+    Y_test %= 10
+    return (X_test, Y_test)
+
+
+X_test, y_test = load_test_data()
+
 # somehow y_train comes as a 2D nx1 matrix
 # y_train = y_train.reshape(y_train.shape[0])
 y_test = y_test.reshape(y_test.shape[0])
@@ -44,9 +68,9 @@ print("Test Set:       {} samples".format(len(X_test)))
 The `EPOCH` and `BATCH_SIZE` values affect the training speed and model accuracy.
 """
 
-EPOCHS = 30
+# EPOCHS = 30
 BATCH_SIZE = 128
-print('Total epochs:', EPOCHS)
+# print('Total epochs:', EPOCHS)
 
 # Set Posit data types
 if len(sys.argv) > 1:
@@ -63,6 +87,14 @@ if len(sys.argv) > 1:
         eps = 0.015625
         posit = np.posit8
         tf_type = tf.posit8
+    elif sys.argv[1] == 'float16':
+        eps = 1e-4
+        posit = np.float16
+        tf_type = tf.float16
+    elif sys.argv[1] == 'float32':
+        eps = 1e-8
+        posit = np.float32
+        tf_type = tf.float32
 else:
     eps = 1e-8
     data_t = 'float32'
@@ -129,7 +161,7 @@ def batch_norm(x, n_out, phase_train):
 Implements the [CifarNet](https://github.com/tensorflow/models/blob/master/research/slim/nets/cifarnet.py)
 
 # Input
-The CifarNet architecture accepts a 32x32xC image as input, where C is the number of color channels. Since CIFAR10 images are RGB, C is 3 in this case.
+The CifarNet architecture accepts a 32x32xC image as input, where C is the number of color channels. Since dataset images are RGB, C is 3 in this case.
 
 # Output
 Return the forwarded prediction - logits.
@@ -242,7 +274,7 @@ y = tf.placeholder(tf.int32, (None))
 training = tf.placeholder(tf.bool)
 
 """## Training Pipeline
-Create a training pipeline that uses the model to classify CIFAR10 data.
+Create a training pipeline that uses the model to classify data.
 """
 
 rate = posit(0.001)
@@ -323,12 +355,11 @@ If want to continue training the network (e.g. on transfer learning) comment thi
 """
 tf.graph_util.remove_training_nodes(tf.get_default_graph().as_graph_def())
 
-data_dir = './data/CIFAR10/'
-model_name = data_dir + 'posit32.ckpt'
-# model_name = data_dir + 'float32.ckpt'
+model_name = data_path + 'posit32.ckpt'
+# model_name = data_path + 'float32.ckpt'
 
 assert os.path.exists(
-    data_dir), "The directory %s does not exist!" % data_dir
+    data_path), "The directory %s does not exist!" % data_path
 
 
 """## Load and cast the Pre-trained Model before Evaluate
@@ -367,7 +398,7 @@ with tf.Session() as sess:
 
 toc = time.time()
 # Save training results
-results_dir = './train_results/CIFAR10/'
+results_dir = './train_results/' + data_set + '/'
 
 if not os.path.exists(results_dir):
     os.makedirs(results_dir)  # Unreachable(?)

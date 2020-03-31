@@ -185,7 +185,7 @@ def batch_norm(x, n_out, phase_train):
 Implements the [CifarNet](https://github.com/tensorflow/models/blob/master/research/slim/nets/cifarnet.py)
 
 # Input
-The CifarNet architecture accepts a 32x32xC image as input, where C is the number of color channels. Since CIFAR10 images are RGB, C is 3 in this case.
+The CifarNet architecture accepts a 32x32xC image as input, where C is the number of color channels. Since dataset images are RGB, C is 3 in this case.
 
 # Output
 Return the forwarded prediction - logits.
