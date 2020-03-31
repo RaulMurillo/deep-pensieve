@@ -57,10 +57,9 @@ X_test = ((X_test.astype('float32')-127.5) / 127.5)  # (60000, 32, 32, 3)
 assert(len(X_test) == len(y_test))
 
 print()
-print("Image Shape: {}".format(X_train[0].shape))
+print("Image Shape: {}".format(X_test[0].shape))
 print()
-print("Training Set:   {} samples".format(len(X_train)))
-print("Test Set:       {} samples".format(len(X_test)))
+print("Test Set: {} samples".format(len(X_test)))
 
 
 # Convert to quantized tf.lite model
