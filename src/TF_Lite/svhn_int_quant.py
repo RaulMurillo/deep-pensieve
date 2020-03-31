@@ -20,6 +20,7 @@ data_set = 'SVHN'
 
 saved_model_dir = './data/' + data_set + '/'
 results_dir = './inference_results/' + data_set + '/'
+train_location = saved_model_dir + 'dataset/train_32x32.mat'
 test_location = saved_model_dir + 'dataset/test_32x32.mat'
 
 # confirm Dataset
