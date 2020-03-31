@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import tensorflow as tf
+import scipy.io as sio
 import os
 
 if sys.version_info.major >= 3:
@@ -18,12 +19,51 @@ tf.set_random_seed(2)
 data_set = 'SVHN'
 
 saved_model_dir = './data/' + data_set + '/'
-results_dir = './inference_results/' + data_set + '/' 
+results_dir = './inference_results/' + data_set + '/'
+test_location = 'dataset/' + saved_model_dir + 'test_32x32.mat'
 
 # confirm Dataset
 print("Dataset is: ", data_set)
 
-(X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
+def load_train_data():
+    train_dict = sio.loadmat(train_location)
+    X = np.asarray(train_dict['X'])
+
+    X_train = []
+    for i in range(X.shape[3]):
+        X_train.append(X[:, :, :, i])
+    X_train = np.asarray(X_train)
+
+    Y_train = train_dict['y']
+    # for i in range(len(Y_train)):
+    #     if Y_train[i]%10 == 0:
+    #         Y_train[i] = 0
+    # Y_train = to_categorical(Y_train,10)
+    Y_train %= 10
+    return (X_train, Y_train)
+
+
+def load_test_data():
+    test_dict = sio.loadmat(test_location)
+    X = np.asarray(test_dict['X'])
+
+    X_test = []
+    for i in range(X.shape[3]):
+        X_test.append(X[:, :, :, i])
+    X_test = np.asarray(X_test)
+
+    Y_test = test_dict['y']
+    # for i in range(len(Y_test)):
+    #     if Y_test[i]%10 == 0:
+    #         Y_test[i] = 0
+    # Y_test = to_categorical(Y_test,10)
+    Y_test %= 10
+    return (X_test, Y_test)
+
+
+X_train, y_train = load_train_data()
+X_test, y_test = load_test_data()
 # somehow y_train comes as a 2D nx1 matrix
 y_train = y_train.reshape(y_train.shape[0])
 y_test = y_test.reshape(y_test.shape[0])
@@ -33,7 +73,7 @@ assert(len(X_test) == len(y_test))
 
 # Normalize data
 X_train = ((X_train-127.5) / 127.5)  # (60000, 32, 32, 3)
-#X_test = (X_test.astype('float32') / 255.0)  # (60000, 32, 32, 3)
+# X_test = (X_test.astype('float32') / 255.0)  # (60000, 32, 32, 3)
 
 assert(len(X_train) == len(y_train))
 assert(len(X_test) == len(y_test))
@@ -50,8 +90,10 @@ print("Test Set:       {} samples".format(len(X_test)))
 images = tf.cast(X_train, tf.float32)
 cifar_ds = tf.data.Dataset.from_tensor_slices(images).batch(1)
 
-## construct and provide a representative dataset
-## this is used to get the dynamic range of activations
+# construct and provide a representative dataset
+# this is used to get the dynamic range of activations
+
+
 def representative_data_gen():
     for input_value in cifar_ds.take(100):
         yield [input_value]
@@ -62,7 +104,7 @@ graph_def_file = saved_model_dir+"frozen_model.pb"
 input_arrays = ["inputs"]
 output_arrays = ["logits"]
 converter = tf.lite.TFLiteConverter.from_frozen_graph(
-        graph_def_file, input_arrays, output_arrays)
+    graph_def_file, input_arrays, output_arrays)
 
 tf.logging.set_verbosity(tf.logging.INFO)
 converter.optimizations = [tf.lite.Optimize.DEFAULT]

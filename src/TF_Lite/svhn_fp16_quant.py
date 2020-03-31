@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import tensorflow as tf
+import scipy.io as sio
 import os
 
 if sys.version_info.major >= 3:
@@ -19,24 +20,40 @@ tf.set_random_seed(2)
 data_set = 'SVHN'
 
 saved_model_dir = './data/' + data_set + '/'
-results_dir = './inference_results/' + data_set + '/' 
+results_dir = './inference_results/' + data_set + '/'
+test_location = 'dataset/' + saved_model_dir + 'test_32x32.mat'
 
 # confirm Dataset
 print("Dataset is: ", data_set)
 
-# (X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
+def load_test_data():
+    test_dict = sio.loadmat(test_location)
+    X = np.asarray(test_dict['X'])
+
+    X_test = []
+    for i in range(X.shape[3]):
+        X_test.append(X[:, :, :, i])
+    X_test = np.asarray(X_test)
+
+    Y_test = test_dict['y']
+    # for i in range(len(Y_test)):
+    #     if Y_test[i]%10 == 0:
+    #         Y_test[i] = 0
+    # Y_test = to_categorical(Y_test,10)
+    Y_test %= 10
+    return (X_test, Y_test)
+
+
+X_test, y_test = load_test_data()
 # somehow y_train comes as a 2D nx1 matrix
-y_train = y_train.reshape(y_train.shape[0])
 y_test = y_test.reshape(y_test.shape[0])
 
-assert(len(X_train) == len(y_train))
 assert(len(X_test) == len(y_test))
 
 # Normalize data
-X_train = ((X_train-127.5) / 127.5)  # (60000, 32, 32, 3)
 X_test = ((X_test.astype('float32')-127.5) / 127.5)  # (60000, 32, 32, 3)
 
-assert(len(X_train) == len(y_train))
 assert(len(X_test) == len(y_test))
 
 print()
@@ -48,15 +65,12 @@ print("Test Set:       {} samples".format(len(X_test)))
 
 # Convert to quantized tf.lite model
 
-images = tf.cast(X_train, tf.float32)
-# cifar_ds = tf.data.Dataset.from_tensor_slices(images).batch(1)
-
 # converter = tf.lite.TFLiteConverter.from_saved_model(saved_model_dir)
 graph_def_file = saved_model_dir+"frozen_model.pb"
 input_arrays = ["inputs"]
 output_arrays = ["logits"]
 converter = tf.lite.TFLiteConverter.from_frozen_graph(
-        graph_def_file, input_arrays, output_arrays)
+    graph_def_file, input_arrays, output_arrays)
 
 tf.logging.set_verbosity(tf.logging.INFO)
 converter.optimizations = [tf.lite.Optimize.DEFAULT]

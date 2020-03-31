@@ -1,6 +1,6 @@
 # Create TensorFlow Lite models
 
-First, freeze the graph of pre-trained models (this is necessary since TensorFlow 1.11 does not allow to save frozen graph).
+First, freeze the graph of pre-trained models (this is necessary since TensorFlow 1.11 does not allow to save frozen graph; use a newer version of TensorFlow as 1.15).
 Use the script `freeze_graph.py` in the following manner:
 
 ```script
