@@ -20,7 +20,7 @@ tf.set_random_seed(2)
 data_set = 'CIFAR10'
 
 saved_model_dir = './data/' + data_set + '/'
-results_dir = './inference_results/lenet5/' + data_set + '/' 
+results_dir = './inference_results/' + data_set + '/' 
 
 # confirm Dataset
 print("Dataset is: ", data_set)

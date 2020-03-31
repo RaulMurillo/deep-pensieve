@@ -25,9 +25,9 @@ data_set = 'SVHN'
 
 # Dataset location
 # data_loc = '/home/raul/Documentos/Posits/deep-pensieve/src/TensorFlow/data/SVHN/dataset/'
-data_loc = './data/' + data_set + '/dataset/'
-train_location = data_loc + 'train_32x32.mat'
-test_location = data_loc + 'test_32x32.mat'
+data_path = './data/' + data_set + '/'
+train_location = 'dataset/' + data_path + 'train_32x32.mat'
+test_location = 'dataset/' + data_path + 'test_32x32.mat'
 
 print(f"Dataset is: {data_set}")
 
@@ -385,6 +385,9 @@ files_path = './train_results/' + data_set + '/'
 if not os.path.exists(files_path):
     os.makedirs(files_path)
 
+if not os.path.exists(data_path):
+    os.makedirs(data_path)
+
 tic = time.time()
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
@@ -441,13 +444,13 @@ with tf.Session() as sess:
     # Save the graph proto to a file.
     f_name = data_t + '.pb'
     tf.train.write_graph(
-        sess.graph_def, files_path, f_name, as_text=False)  # proto
+        sess.graph_def, data_path, f_name, as_text=False)  # proto
 
     # Save the variables to disk (checkpoint file)
     saver = tf.train.Saver(tf.global_variables())
     # model_name = files_path + "checkpoint.data"
     # saver.save(sess, model_name)
-    model_name = files_path + data_t + '.ckpt'
+    model_name = data_path + data_t + '.ckpt'
     save_path = saver.save(sess, model_name)
     print("Model saved in path: %s" % save_path)
 toc = time.time()
