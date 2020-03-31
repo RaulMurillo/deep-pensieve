@@ -25,7 +25,7 @@ data_set = 'SVHN'
 print("Dataset is: ", data_set)
 
 data_path = './data/' + data_set + '/'
-test_location = 'dataset/' + data_path + 'test_32x32.mat'
+test_location = data_path + 'dataset/test_32x32.mat'
 
 
 def load_test_data():
