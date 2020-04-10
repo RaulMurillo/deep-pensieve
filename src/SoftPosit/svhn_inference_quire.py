@@ -1,6 +1,6 @@
 import numpy as np
 import softposit as sp
-from tensorflow.keras.datasets import cifar10
+import scipy.io as sio
 import sys
 import os
 import pickle
@@ -255,17 +255,29 @@ class SimpleConvNet:
 
 # Actual training/inference process
 posit_t = sp.posit8
-dataset = 'CIFAR10'
+dataset = 'SVHN'
+print("Dataset is: ", dataset)
 
 # Read data
-(_, _), (X_test, y_test) = cifar10.load_data()
-# [test_init:test_end] # NCWH format
-# assert((X_test.reshape(-1, 3, 32, 32) == X_test.transpose(0,3,1,2)).all())
-# print(X_test.reshape(-1, 3, 32, 32))
-# print('\n*******************\n************************\n')
-# print(X_test.transpose(0,3,1,2))
-# print('OK!')
-# exit(1)
+data_path = './data/' + dataset + '/'
+test_location = data_path + 'dataset/test_32x32.mat'
+
+
+def load_test_data():
+    test_dict = sio.loadmat(test_location)
+    X = np.asarray(test_dict['X'])
+
+    X_test = []
+    for i in range(X.shape[3]):
+        X_test.append(X[:, :, :, i])
+    X_test = np.asarray(X_test)
+
+    Y_test = test_dict['y']
+    Y_test %= 10
+    return (X_test, Y_test)
+
+
+X_test, y_test = load_test_data()
 
 if(len(sys.argv) > 2):
     first_img = int(sys.argv[1])
@@ -283,7 +295,7 @@ else:
     print("Inference with all test images")
 
 
-# CIFAR-10 no need img. padding
+# SVHN no need img. padding
 # # Pad images (LeNet only accepts 32x32 input imgs.)
 # # X_test = np.pad(X_test, [(0, 0), (0, 0), (2, 2), (2, 2)], 'constant')
 
@@ -301,15 +313,17 @@ print('Working with type', type(X_test.item(0)))
 # Generate model
 network = SimpleConvNet(output_size=10, weight_init_std=0.01, _t=posit_t)
 
-f_name = './data/'+ dataset + '/posit32.ckpt'
+f_name = data_path + 'posit32.ckpt'
 network.load_params(file_name=f_name, _t=posit_t)
 print('NN generated!')
 
 
-def acc(batch):
+def acc(batch_i):
     # print('Type is ', type(X_test.item(0)))
-    k = 32  # 125  # Batch size
-    i = k*batch
+    k = 32  # Batch size
+    i = batch_i*k
+    print(f'Processing images {i}-{i+k}')
+
     # print(y_test[i:i+k])
     # exit(1)
     return network.accuracy(x=X_test[i:i+k], t=y_test[i:i+k])
@@ -328,6 +342,7 @@ try:
 
     # , chunksize=len(y_test)//cores
     a = pool.map(acc, iterable=range(len(y_test)//32))  # >= cores
+
 finally:  # To make sure processes are closed in the end, even if errors happen
     pool.close()
     pool.join()
