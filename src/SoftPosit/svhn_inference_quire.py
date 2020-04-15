@@ -320,7 +320,7 @@ print('NN generated!')
 
 def acc(batch_i):
     # print('Type is ', type(X_test.item(0)))
-    k = 32  # Batch size
+    k = 16  # Batch size
     i = batch_i*k
     print(f'Processing images {i}-{i+k}')
 
@@ -341,7 +341,7 @@ try:
     print(f'Using {cores} workers')
 
     # , chunksize=len(y_test)//cores
-    a = pool.map(acc, iterable=range(len(y_test)//32))  # >= cores
+    a = pool.map(acc, iterable=range(len(y_test)//16))  # >= cores
 
 finally:  # To make sure processes are closed in the end, even if errors happen
     pool.close()

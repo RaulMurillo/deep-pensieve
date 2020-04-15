@@ -3,7 +3,7 @@
 START=$(date +%s)
 BATCH=256
 INIT=0
-for i in {0..1}
+for i in {71..100}
 do
         ARG1=$(( INIT  + i * BATCH ))
         python svhn_inference_quire.py $ARG1 $BATCH
