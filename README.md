@@ -78,7 +78,7 @@ Deep PeNSieve uses NumPy, and relies heavily on [TensorFlow](https://www.tensorf
 | How to cite Deep PeNSieve                                                                           |
 |-----------------------------------------------------------------------------------------------------|
 | If you want to refer to the framework, or the project as a whole, please cite publication below:    |
-| [Reference document required]                                                                       |
+| Raul Murillo, Alberto A. Del Barrio, Guillermo Botella, __Deep PeNSieve: A deep learning framework based on the posit number system__,Digital Signal Processing (2020), https://doi.org/10.1016/j.dsp.2020.102762                                              |
 
 ## License
 
