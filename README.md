@@ -71,14 +71,22 @@ Please make sure to update tests as appropriate.
 ## Authors and credits
 
 Deep PeNSieve is managed by Raul Murillo (contact: ramuri01@ucm.es).
-<!-- * **Raul Murillo** - *Initial work* - [Deep PeNSieve](https://github.com/RaulMurillo/deep_pensieve) -->
 
-Deep PeNSieve uses NumPy, and relies heavily on [TensorFlow](https://www.tensorflow.org/) and [SoftPosit](https://gitlab.com/cerlane/SoftPosit-Python).
+The software uses NumPy, and relies heavily on [TensorFlow](https://www.tensorflow.org/) and [SoftPosit](https://gitlab.com/cerlane/SoftPosit-Python).
 
-| How to cite Deep PeNSieve                                                                           |
-|-----------------------------------------------------------------------------------------------------|
-| If you want to refer to the framework, or the project as a whole, please cite publication below:    |
-| Raul Murillo, Alberto A. Del Barrio, Guillermo Botella, __Deep PeNSieve: A deep learning framework based on the posit number system__, Digital Signal Processing (2020), https://doi.org/10.1016/j.dsp.2020.102762                                              |
+Deep PeNSieve is the result of our [paper](https://doi.org/10.1016/j.dsp.2020.102762).  If you find this code useful in your research, please consider citing:
+
+    @article{MURILLO2020102762,
+    title = "Deep PeNSieve: A deep learning framework based on the posit number system",
+    journal = "Digital Signal Processing",
+    pages = "102762",
+    year = "2020",
+    issn = "1051-2004",
+    doi = "https://doi.org/10.1016/j.dsp.2020.102762",,
+    author = "Raul Murillo and Alberto A. [Del Barrio] and Guillermo Botella"
+    }
+
+This code was tested on an Ubuntu 18.04 system.
 
 ## License
 
