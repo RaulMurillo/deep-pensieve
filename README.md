@@ -2,7 +2,8 @@
 
 **`Documentation`** |
 ------------------- |
-![Documentation](https://img.shields.io/badge/api-reference-blue.svg)|
+![Documentation](https://img.shields.io/badge/api-reference-blue.svg)
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.dsp.2020.102762-blue)](https://doi.org/10.1016/j.dsp.2020.102762)|
 
 Deep PeNSieve is a framework to entirely performing both training and inference of DNNs employing the [Posit Number System](http://www.johngustafson.net/pdfs/BeatingFloatingPoint.pdf).
 
