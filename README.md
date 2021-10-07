@@ -76,7 +76,7 @@ Deep PeNSieve is managed by Raul Murillo (contact: ramuri01@ucm.es).
 The software uses NumPy, and relies heavily on [TensorFlow](https://www.tensorflow.org/) and [SoftPosit](https://gitlab.com/cerlane/SoftPosit-Python).
 
 Deep PeNSieve is the result of our [paper](https://doi.org/10.1016/j.dsp.2020.102762).  If you find this code useful in your research, please consider citing:
-> Murillo, Raul, Alberto A. Del Barrio, and Guillermo Botella. "Deep PeNSieve: A deep learning framework based on the posit number system." Digital Signal Processing 102 (2020): 102762.
+> Raul Murillo, Alberto A. Del Barrio, and Guillermo Botella. "Deep PeNSieve: A deep learning framework based on the posit number system." Digital Signal Processing 102 (2020): 102762.
 ```
 @article{murillo2020deep,
   title={Deep PeNSieve: A deep learning framework based on the posit number system},
