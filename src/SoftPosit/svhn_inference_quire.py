@@ -12,6 +12,7 @@ from common.matmul_quire import *
 from common.read_weights import *
 from multiprocessing import Pool, cpu_count
 
+# Remove this for further evaluation
 np.random.seed(1)
 
 
@@ -158,7 +159,7 @@ class SimpleConvNet:
         return (acc, top5)
 
     def numerical_gradient(self, x, t):
-        """求梯度（数值微分）
+        """求梯度 (数值微分)
         Parameters
         ----------
         x : 输入数据
@@ -181,7 +182,7 @@ class SimpleConvNet:
         return grads
 
     def gradient(self, x, t):
-        """求梯度（误差反向传播法）
+        """求梯度 (误差反向传播法)
         Parameters
         ----------
         x : 输入数据
@@ -259,7 +260,7 @@ dataset = 'SVHN'
 print("Dataset is: ", dataset)
 
 # Read data
-data_path = './data/' + dataset + '/'
+data_path = '../data/' + dataset + '/'
 test_location = data_path + 'dataset/test_32x32.mat'
 
 
@@ -378,23 +379,11 @@ with open(results_file, 'w') as file:
     writer.writerow(hist.keys())
     writer.writerows(zd)
 
-# Send results
-send_mail = True
-if(send_mail):
-    PACKAGE_PARENT = '..'
-    SCRIPT_DIR = os.path.dirname(os.path.realpath(
-        os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-    sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+# Show results
+s = int(toc-tic)
+m, s = divmod(s, 60)
+h, m = divmod(m, 60)
+days, h = divmod(h, 24)
 
-    from other.mail import send_mail
-
-    s = int(toc-tic)
-    m, s = divmod(s, 60)
-    h, m = divmod(m, 60)
-    days, h = divmod(h, 24)
-
-    subject = 'CNN Inference Quire compleated'
-    body = f'The Inference phase with data type {posit_t} on TensorFlow ({dataset} + Quire) has finished after {h} h, {m} min, {s} sec!\n\nThe ACC and Top-5 are:\n{hist}'
-
-    path = os.path.abspath('../other/credentials.txt')
-    send_mail(subject=subject, mail_body=body, credentials=path)
+body = f'The Inference phase with data type {posit_t} on TensorFlow ({dataset} + Quire) has finished after {h} h, {m} min, {s} sec!\n\nThe ACC and Top-5 are:\n{hist}'
+print(body)

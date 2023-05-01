@@ -10,14 +10,14 @@ class MultiLayerNet:
     """全连接的多层神经网络
     Parameters
     ----------
-    input_size : 输入大小（MNIST的情况下为784）
-    hidden_size_list : 隐藏层的神经元数量的列表（e.g. [100, 100, 100]）
-    output_size : 输出大小（MNIST的情况下为10）
+    input_size : 输入大小 (MNIST的情况下为784)
+    hidden_size_list : 隐藏层的神经元数量的列表 (e.g. [100, 100, 100])
+    output_size : 输出大小 (MNIST的情况下为10)
     activation : 'relu' or 'sigmoid'
-    weight_init_std : 指定权重的标准差（e.g. 0.01）
+    weight_init_std : 指定权重的标准差 (e.g. 0.01)
         指定'relu'或'he'的情况下设定“He的初始值”
         指定'sigmoid'或'xavier'的情况下设定“Xavier的初始值”
-    weight_decay_lambda : Weight Decay（L2范数）的强度
+    weight_decay_lambda : Weight Decay (L2范数)的强度
     """
     def __init__(self, input_size, hidden_size_list, output_size,
                  activation='relu', weight_init_std='relu', weight_decay_lambda=0):
@@ -49,7 +49,7 @@ class MultiLayerNet:
         """设定权重的初始值
         Parameters
         ----------
-        weight_init_std : 指定权重的标准差（e.g. 0.01）
+        weight_init_std : 指定权重的标准差 (e.g. 0.01)
             指定'relu'或'he'的情况下设定“He的初始值”
             指定'sigmoid'或'xavier'的情况下设定“Xavier的初始值”
         """
@@ -98,7 +98,7 @@ class MultiLayerNet:
         return accuracy
 
     def numerical_gradient(self, x, t):
-        """求梯度（数值微分）
+        """求梯度 (数值微分)
         Parameters
         ----------
         x : 输入数据
@@ -119,7 +119,7 @@ class MultiLayerNet:
         return grads
 
     def gradient(self, x, t):
-        """求梯度（误差反向传播法）
+        """求梯度 (误差反向传播法)
         Parameters
         ----------
         x : 输入数据

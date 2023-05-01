@@ -12,13 +12,14 @@ else:
 tf.enable_eager_execution()
 
 
+# Remove this for further evaluation
 np.random.seed(1)
 tf.set_random_seed(2)
 
 # Load Dataset
 data_set = 'CIFAR10'
 
-saved_model_dir = './data/' + data_set + '/'
+saved_model_dir = '../data/' + data_set + '/'
 results_dir = './inference_results/' + data_set + '/' 
 
 # confirm Dataset

@@ -17,6 +17,7 @@ import csv
 import os
 import time
 
+# Remove this for further evaluation
 np.random.seed(1)
 tf.set_random_seed(2)
 
@@ -24,7 +25,7 @@ tf.set_random_seed(2)
 data_set = 'SVHN'
 print("Dataset is: ", data_set)
 
-data_path = './data/' + data_set + '/'
+data_path = '../data/' + data_set + '/'
 test_location = data_path + 'dataset/test_32x32.mat'
 
 
@@ -413,23 +414,11 @@ with open(results_dir + data_t + '.csv', 'w') as file:
 with open(results_dir + 'top5.txt', "a+") as f:
     f.write("%s: %s\n" % (data_t, test_top5))
 
-send_mail = True
-if(send_mail):
-    PACKAGE_PARENT = '..'
-    SCRIPT_DIR = os.path.dirname(os.path.realpath(
-        os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-    sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+# Show results
+s = int(toc-tic)
+m, s = divmod(s, 60)
+h, m = divmod(m, 60)
+days, h = divmod(h, 24)
 
-    from other.mail import send_mail
-
-    s = int(toc-tic)
-    m, s = divmod(s, 60)
-    h, m = divmod(m, 60)
-    days, h = divmod(h, 24)
-
-    subject = 'CNN Inference compleated'
-    body = 'The inference phase (pre-trained weights) with data type %s on TensorFlow (%s) has finished after %s h, min, sec!\n\nThe results are:\n%s' % (
-        posit, data_set, (days, h, m, s), hist)
-
-    path = os.path.abspath('../other/credentials.txt')
-    send_mail(subject=subject, mail_body=body, credentials=path)
+body = 'The inference phase (pre-trained weights) with data type %s on TensorFlow (%s) has finished after %s h, min, sec!\n\nThe results are:\n%s' % (
+print(body)

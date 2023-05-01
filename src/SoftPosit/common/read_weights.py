@@ -7,7 +7,7 @@ import os
 
 def read_params(N_vars, file_name):
 
-    # files_path = './data/lenet/'
+    # files_path = '../data/lenet/'
     # directory = os.path.dirname(files_path)
     # model_name = files_path + 'posit32.ckpt'
 
