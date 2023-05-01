@@ -50,9 +50,9 @@ $ python
 >>> a = tf.constant(0.3, dtype=tf.posit8)
 >>> b = tf.constant(0.7, dtype=tf.posit8)
 >>> with tf.Session() as sess:
-...     print(f'Using Posit8, {a.eval()} + {b.eval()} = {tf.add(a,b).eval()}')
+...     print(f'Using Posit8: {a.eval()} + {b.eval()} = {tf.add(a,b).eval()}')
 ...
-Using Posit8, 0.296875 + 0.703125 = 1.0
+Using Posit8: 0.296875 + 0.703125 = 1.0
 ```
 
 ## Source files
