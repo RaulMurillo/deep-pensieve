@@ -1,0 +1,2 @@
+model_checkpoint_path: "posit8.ckpt"
+all_model_checkpoint_paths: "posit8.ckpt"

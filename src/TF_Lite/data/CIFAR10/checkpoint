@@ -1,2 +1,0 @@
-model_checkpoint_path: "float32.ckpt"
-all_model_checkpoint_paths: "float32.ckpt"

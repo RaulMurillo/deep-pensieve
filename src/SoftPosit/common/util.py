@@ -74,7 +74,7 @@ def col2im(col, input_shape, filter_h, filter_w, stride=1, pad=0):
     Parameters
     ----------
     col :
-    input_shape : 输入数据的形状（例：(10, 1, 28, 28)）
+    input_shape : 输入数据的形状 (例：(10, 1, 28, 28))
     filter_h :
     filter_w
     stride

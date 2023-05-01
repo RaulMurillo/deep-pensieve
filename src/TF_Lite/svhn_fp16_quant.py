@@ -13,13 +13,14 @@ tf.enable_eager_execution()
 tf.lite.constants.FLOAT16
 
 
+# Remove this for further evaluation
 np.random.seed(1)
 tf.set_random_seed(2)
 
 # Load Dataset
 data_set = 'SVHN'
 
-saved_model_dir = './data/' + data_set + '/'
+saved_model_dir = '../data/' + data_set + '/'
 results_dir = './inference_results/' + data_set + '/'
 test_location = saved_model_dir + 'dataset/test_32x32.mat'
 

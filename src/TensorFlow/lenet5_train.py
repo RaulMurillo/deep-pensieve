@@ -18,6 +18,7 @@ import csv
 import os
 import time
 
+# Remove this for further evaluation
 np.random.seed(1)
 tf.set_random_seed(2)
 
@@ -424,22 +425,11 @@ f = open(files_path + 'top5.txt', "a+")
 f.write("%s: %s\n" % (data_t, test_top5))
 f.close()
 
-send_mail = True
-if(send_mail):
-    PACKAGE_PARENT = '..'
-    SCRIPT_DIR = os.path.dirname(os.path.realpath(
-        os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-    sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+# Show results
+s = int(toc-tic)
+m, s = divmod(s, 60)
+h, m = divmod(m, 60)
+days, h = divmod(h, 24)
 
-    from other.mail import send_mail
-
-    s = int(toc-tic)
-    m, s = divmod(s, 60)
-    h, m = divmod(m, 60)
-
-    subject = 'CNN Training compleated'
-    body = 'The training phase with data type %s on TensorFlow (%s) has finished after %s h, min, sec!\n\nThe Top-5 is %s and training history is:\n%s' % (
-        posit, data_set, (h, m, s), test_top5, hist)
-
-    path = os.path.abspath('../other/credentials.txt')
-    send_mail(subject=subject, mail_body=body, credentials=path)
+body = 'The training phase with data type %s on TensorFlow (%s) has finished after %s h, min, sec!\n\nThe Top-5 is %s and training history is:\n%s' % (posit, data_set, (days, h, m, s), test_top5, hist)
+print(body)

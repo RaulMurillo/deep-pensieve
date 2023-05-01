@@ -1,6 +1,6 @@
 # https://blog.metaflow.fr/tensorflow-how-to-freeze-a-model-and-serve-it-with-a-python-api-d4f3596b3adc
 # Usage: Use TensorFlow 1.15
-# $ python freeze_graph.py --model_dir ./data/lenet5/mnist/ --output_node_names logits
+# $ python freeze_graph.py --model_dir ../data/lenet5/mnist/ --output_node_names logits
 import os, argparse
 
 import tensorflow as tf

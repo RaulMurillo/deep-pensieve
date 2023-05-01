@@ -14,6 +14,7 @@ tf.enable_eager_execution()
 tf.lite.constants.FLOAT16
 
 
+# Remove this for further evaluation
 np.random.seed(1)
 tf.set_random_seed(2)
 
@@ -28,7 +29,7 @@ else:
     data_set = 'mnist'
     d_set = mnist
 
-saved_model_dir = './data/lenet5/' + data_set + '/' 
+saved_model_dir = '../data/lenet5/' + data_set + '/' 
 results_dir = './inference_results/lenet5/' + data_set + '/' 
 
 # confirm Dataset

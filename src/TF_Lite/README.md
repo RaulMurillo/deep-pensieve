@@ -4,7 +4,7 @@ First, freeze the graph of pre-trained models (this is necessary since TensorFlo
 Use the script `freeze_graph.py` in the following manner:
 
 ```script
-python freeze_graph.py --model_dir ./data/lenet5/mnist/ --output_node_names logits
+python freeze_graph.py --model_dir ../data/lenet5/mnist/ --output_node_names logits
 ```
 
 Then, you can convert this graph to a TF Lite model, as `lenet5_int_quant.py` does, for example.
