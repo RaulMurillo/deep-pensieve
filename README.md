@@ -16,6 +16,8 @@ Deep PeNSieve is a framework to entirely performing both training and inference 
 
 ## Installation
 
+### Locally (via pip)
+
 Deep PeNSieve relies on other two libraires: [TensorFlow](https://www.tensorflow.org/) and [SoftPosit](https://gitlab.com/cerlane/SoftPosit-Python). TensorFlow framework needs to be [modified](https://github.com/xman/tensorflow) to support posit data type via software emulation.
 
 At least TensorFlow must be installed to run Deep PeNSieve. If need to use fused operations, install SoftPosit too. You can install them, for example, using `pip`. The following sequence of commands should install the required libraries:
@@ -32,6 +34,16 @@ Other optional but helpful package is `scikit-learn`, which is used in the examp
 **Note:** To avoid incompatibility issues, make sure no other version of NumPy or TensorFlow are installed. I suggest creating a virtual environment.
 
 **Note:** This code was tested on an Ubuntu 18.04 system.
+
+### Via Docker
+
+You can simply build a Docker container and run Deep PeNSieve from there:
+```shell
+git clone https://github.com/RaulMurillo/deep-pensieve.git
+cd deep-pensieve
+docker build -t deep_pns -f Dockerfile .
+docker run -it deep_pns
+```
 
 ## Usage
 
