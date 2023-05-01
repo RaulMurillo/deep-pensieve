@@ -18,48 +18,47 @@ Deep PeNSieve is a framework to entirely performing both training and inference 
 
 Deep PeNSieve relies on other two libraires: [TensorFlow](https://www.tensorflow.org/) and [SoftPosit](https://gitlab.com/cerlane/SoftPosit-Python). TensorFlow framework needs to be [modified](https://github.com/xman/tensorflow) to support posit data type via software emulation.
 
-At least TensorFlow must be installed to run Deep PeNSieve. If need to use fused operations, install SoftPosit too. You can install them, for example, using `pip`. First install the prerequisites:
+At least TensorFlow must be installed to run Deep PeNSieve. If need to use fused operations, install SoftPosit too. You can install them, for example, using `pip`. The following sequence of commands should install the required libraries:
 
 ```shell
-$ pip install numpy-posit
-$ pip install requests
+pip install requests numpy==1.15.2 softposit
+pip install numpy-posit
+pip install https://s3-ap-southeast-1.amazonaws.com/posit-speedgo/tensorflow_posit-1.11.0.0.0.1.dev1-cp36-cp36m-linux_x86_64.whl
 ```
 
-And then, the required libraries:
-
-```shell
-$ pip install https://s3-ap-southeast-1.amazonaws.com/posit-speedgo/tensorflow_posit-1.11.0.0.0.1.dev1-cp36-cp36m-linux_x86_64.whl
-$ pip install softposit
-```
+The order of the commands is important.  
+Other optional but helpful package is `scikit-learn`, which is used in the example scripts.
 
 **Note:** To avoid incompatibility issues, make sure no other version of NumPy or TensorFlow are installed. I suggest creating a virtual environment.
+
+**Note:** This code was tested on an Ubuntu 18.04 system.
 
 ## Usage
 
 Try your first Deep PeNSieve program
 
 ```shell
-$ python
+python
 ```
 
 ```python
->>> import numpy as np
->>> import tensorflow as tf
->>> np.posit32(np.pi)
-3.141593
->>> a = tf.constant(0.3, dtype=tf.posit8)
->>> b = tf.constant(0.7, dtype=tf.posit8)
->>> with tf.Session() as sess:
-...     print(f'Using Posit8, {a.eval()} + {b.eval()} = {tf.add(a,b).eval()}')
-...
-Using Posit8, 0.296875 + 0.703125 = 1.0
+import numpy as np
+import tensorflow as tf
+np.posit32(np.pi)
+# 3.141593
+a = tf.constant(0.3, dtype=tf.posit8)
+b = tf.constant(0.7, dtype=tf.posit8)
+with tf.Session() as sess:
+    print(f'Using Posit8, {a.eval()} + {b.eval()} = {tf.add(a,b).eval()}')
+# Using Posit8, 0.296875 + 0.703125 = 1.0
+
 ```
 
 ## Source files
 
 The actual source files of the project are stored inside the `src` folder. it contains three folders:  
 
-* `TensorFlow`. Contains scripts for generating and training CN models.
+* `TensorFlow`. Contains scripts for generating and training CNN models.
 * `SoftPosit`. Contains scripts for generating same models as in `TensorFlow` folder, and perform low-precision inference with 8-bit posits using quire and fused operations.
 * `TF_Lite`. Contains scripts for creating TensorFlow Lite models from trained models on single-precision floating-point at `TensorFlow` folder.
 
