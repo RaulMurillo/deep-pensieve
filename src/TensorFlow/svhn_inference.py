@@ -420,5 +420,5 @@ m, s = divmod(s, 60)
 h, m = divmod(m, 60)
 days, h = divmod(h, 24)
 
-body = 'The inference phase (pre-trained weights) with data type %s on TensorFlow (%s) has finished after %s h, min, sec!\n\nThe results are:\n%s' % (
+body = 'The inference phase (pre-trained weights) with data type %s on TensorFlow (%s) has finished after %s h, min, sec!\n\nThe results are:\n%s' % (posit, data_set, (days, h, m, s), test_top5, hist)
 print(body)
